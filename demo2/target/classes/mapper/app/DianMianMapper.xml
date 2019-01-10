@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baopinghui.bin.mapper.app.DianMianMapper">
+
+
+<insert id="insertDianMian" parameterType="com.baopinghui.bin.entity.DianMianEntity" >
+    insert into tb_dianmian(dm_name,address,phone,dm_desc) value(#{dmname},#{address},#{phone},#{dmdesc})
+</insert>
+
+
+<update id="updateDianMian" parameterType="com.baopinghui.bin.entity.DianMianEntity">
+    update tb_dianmian set dm_name=#{dmname},address=#{address},phone=#{phone},dm_desc=#{dmdesc} where id=#{id}
+</update>
+<delete id="deleteDianMain">
+  delete from tb_dianmian where id=#{id}
+</delete>
+<select id="selectDianMian" resultType="map">
+  select * from tb_dianmian order by id desc
+</select>
+<select id="selectDianMian2" resultType="map">
+  select * from tb_dianmian where id=#{id}
+</select>
+</mapper>

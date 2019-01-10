@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baopinghui.bin.mapper.app.BookMapper">
+
+
+<insert id="insertBook" parameterType="com.baopinghui.bin.entity.BookEntity" >
+    insert into tb_book(username,course,active,phone,dianmian,create_date,statu) value(#{username},#{course},#{active},#{phone},#{dianmian},#{create_date},#{statu})
+</insert>
+
+
+<update id="updateBook" parameterType="com.baopinghui.bin.entity.BookEntity">
+    update tb_book set username=#{username},course=#{course},active=#{active},phone=#{phone},dianmian=#{dianmian},statu=#{statu} where id=#{id}
+</update>
+<delete id="deleteBook">
+  delete from tb_book where id=#{id}
+</delete>
+<select id="selectBook" resultType="map">
+  select id,username,course,active,phone,dianmian,DATE_FORMAT(create_date,'%Y-%m-%d %H:%i:%s') as create_date,statu from tb_book order by id desc
+</select>
+<update id="updatestatu">
+update tb_book set statu= if(statu=0,1,0) where id=#{id}
+</update>
+<select id="selectBook1" resultType="map">
+select * from tb_book where id in (#{id})
+</select>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baopinghui.bin.mapper.app.StudentMapper">
+
+
+<insert id="insertStudent" parameterType="com.baopinghui.bin.entity.StudentEntity" >
+    insert into tb_student(student_name,phone,s_desc) value(#{student_name},#{phone},#{s_desc})
+</insert>
+
+
+<update id="updateStudent" parameterType="com.baopinghui.bin.entity.StudentEntity">
+    update tb_student set student_name=#{student_name},phone=#{phone},s_desc=#{s_desc} where id=#{id}
+</update>
+<delete id="deleteStudent">
+  delete from tb_student where id=#{id}
+</delete>
+<select id="selectStudent" resultType="map">
+ select * ,(SELECT count(*) from tb_article where tb_article.student_id=t.id) num from tb_student t order by id desc
+</select>
+<select id="selectStudent2" resultType="map">
+ select * ,(SELECT count(*) from tb_article where tb_article.student_id=t.id) num from tb_student t where student_name LIKE '%${name}%' order by id desc
+</select>
+<select id="selectStudentAll1" resultType="map">
+ select c.course_name ,c.id as cid from tb_student s,tb_kecheng c,tb_c_s cs where s.id=#{id} and s.id=cs.student_id and c.id=cs.course_id
+</select>
+<select id="selectStudentAll2" resultType="map">
+ select a.active_name ,a.id as aid from tb_a_s abs,tb_active a,tb_student s where s.id=#{id} and s.id=abs.student_id and a.id=abs.active_id
+</select>
+<delete id="deleteCSbyid">
+  DELETE FROM tb_c_s WHERE student_id=#{id};
+</delete>
+<delete id="deleteASbyid">
+  DELETE FROM tb_a_s WHERE student_id=#{id};
+</delete>
+<insert id="insertCSbyid">
+ insert into tb_c_s(student_id,course_id) value(#{student_id},#{course_id})
+</insert>
+<insert id="insertASbyid">
+ insert into tb_a_s(student_id,active_id) value(#{student_id},#{active_id})
+</insert>
+<select id="selectlastId" resultType="map">
+SELECT max(id) as id from  tb_student
+</select>
+<select id="selectStudentbyname" resultType="map">
+SELECT  count(id) count  from  tb_student where student_name=#{name}
+</select>
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baopinghui.bin.mapper.app.ArticleMapper">
+
+
+<insert id="insertArticle" parameterType="com.baopinghui.bin.entity.ArticleEntity" >
+    insert into tb_article(article_url,article_desc,student_id,create_date,huaxu_url,create_date_c) value(#{article_url},#{article_desc},#{student_id},#{create_date},#{huaxu_url},#{create_date_c})
+</insert>
+
+
+<update id="updateArticle" parameterType="com.baopinghui.bin.entity.ArticleEntity">
+    update tb_article set article_desc=#{article_desc},create_date_c=#{create_date_c},student_id=#{student_id} where id=#{id}
+</update>
+<delete id="deleteArticle">
+  delete from tb_article where id=#{id}
+</delete>
+<select id="selectArticle" resultType="map">
+  select a.id,a.article_url,a.article_desc,(select student_name from tb_student where id=a.student_id)as student_name
+,DATE_FORMAT(a.create_date,'%Y-%m-%d %H:%i:%s') as create_date,create_date_c,
+  a.huaxu_url
+ from tb_article  a,tb_student s GROUP BY a.id  order by a.id desc
+</select>
+
+<select id="selectArticle2" resultType="map">
+  select a.id,a.article_url,a.article_desc,(select student_name from tb_student where id=a.student_id)as student_name
+,DATE_FORMAT(a.create_date,'%Y-%m-%d %H:%i:%s') as create_date,create_date_c,
+  a.huaxu_url
+ from tb_article  a,tb_student s GROUP BY a.id  HAVING student_name LIKE '%${name}%' order by a.id desc
+</select>
+<select id="selectArticle3" resultType="map">
+  select a.id,a.article_url,a.article_desc,(select student_name from tb_student where id=a.student_id)as student_name
+,DATE_FORMAT(a.create_date,'%Y-%m-%d %H:%i:%s') as create_date,create_date_c,
+  a.huaxu_url
+ from tb_article  a,tb_student s GROUP BY a.id  HAVING student_name = #{name} order by a.id desc
+</select>
+<select id="selectArticle4" resultType="map">
+  select a.id,a.article_url,a.article_desc,(select student_name from tb_student where id=a.student_id)as student_name
+,DATE_FORMAT(a.create_date,'%Y-%m-%d %H:%i:%s') as create_date,create_date_c,
+  a.huaxu_url
+ from tb_article  a,tb_student s GROUP BY a.id  HAVING student_name <![CDATA[ <> ]]> #{name}  order by a.id desc
+</select>
+<select id="selectArticle5" resultType="map">
+  select a.id,a.article_url,a.article_desc,(select student_name from tb_student where id=a.student_id)as student_name
+,DATE_FORMAT(a.create_date,'%Y-%m-%d %H:%i:%s') as create_date,create_date_c,
+  a.huaxu_url
+ from tb_article  a,tb_student s where a.id=#{id} GROUP BY a.id  
+</select>
+<update id="updateArticleUrlbyid" >
+    update tb_article set article_url=#{article_url} where id=#{id}
+</update>
+<update id="updateHuaxuUrlbyid" >
+    update tb_article set huaxu_url=#{huaxu_url} where id=#{id}
+</update>
+</mapper>

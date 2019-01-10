@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baopinghui.bin.mapper.app.ActiveMapper">
+
+
+<insert id="insertActive" parameterType="com.baopinghui.bin.entity.ActiveEntity" >
+    insert into tb_active(active_name,active_desc,address,huaxu_url,active_url,active_date) value(#{active_name},#{active_desc},#{address},#{huaxu_url},#{active_url},#{active_date})
+</insert>
+
+
+<update id="updateActive" parameterType="com.baopinghui.bin.entity.ActiveEntity">
+    update tb_active set active_name=#{active_name},active_desc=#{active_desc},address=#{address},active_date=#{active_date} where id=#{id}
+</update>
+<delete id="deleteActive">
+  delete from tb_active where id=#{id}
+</delete>
+<select id="selectActive" resultType="map">
+  select * from tb_active order by id desc
+</select>
+<select id="selectActive2" resultType="map">
+  select * from tb_active  where id=#{id}
+</select>
+<update id="updateActiveUrlbyid" >
+    update tb_active set active_url=#{active_url} where id=#{id}
+</update>
+<update id="updateHuaxuUrlbyid" >
+    update tb_active set huaxu_url=#{huaxu_url} where id=#{id}
+</update>
+<delete id="deleteACbyId">
+  delete from tb_a_s  where active_id=#{id}
+</delete>
+<select id="selectActiveCountbyid" resultType="map">
+select count(id) count from tb_a_s where active_id=#{id}
+</select>
+</mapper>

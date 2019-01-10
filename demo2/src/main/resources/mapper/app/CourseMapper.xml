@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baopinghui.bin.mapper.app.CourseMapper">
+
+
+<insert id="insertCourse" parameterType="com.baopinghui.bin.entity.CourseEntity" >
+    insert into tb_kecheng(course_name,course_desc,course_url,huaxu_url,dianmian_id,course_date,year) value(#{course_name},#{course_desc},#{course_url},#{huaxu_url},#{dianmian_id},#{course_date},#{year})
+</insert>
+
+
+<update id="updateCourse" parameterType="com.baopinghui.bin.entity.CourseEntity">
+    update tb_kecheng set course_name=#{course_name},course_desc=#{course_desc},dianmian_id=#{dianmian_id},course_date=#{course_date},year=#{year} where id=#{id}
+</update>
+<delete id="deleteCourse">
+  delete from tb_kecheng where id=#{id}
+</delete>
+<select id="selectCourse" resultType="map">
+    select k.id,k.course_desc,k.course_name,k.course_url,k.huaxu_url,k.course_date,
+   t.dm_name as dm_name, k.year
+  from tb_kecheng k,tb_dianmian t where t.id=k.dianmian_id order by id desc
+</select>
+<select id="selectCourse2" resultType="map">
+    select k.id,k.course_desc,k.course_name,k.course_url,k.huaxu_url,k.course_date,
+   t.dm_name as dm_name, k.year
+  from tb_kecheng k,tb_dianmian t where t.id=k.dianmian_id and k.id=#{id}
+</select>
+<update id="updateCourseUrlbyid" >
+    update tb_kecheng set course_url=#{course_url} where id=#{id}
+</update>
+<update id="updateHuaxuUrlbyid" >
+    update tb_kecheng set huaxu_url=#{huaxu_url} where id=#{id}
+</update>
+<delete id="deleteSCbyId">
+  delete from tb_c_s  where course_id=#{id}
+</delete>
+<select id="selectCourseCountbyid" resultType="map">
+select count(id) count from tb_c_s where course_id=#{id}
+</select>
+</mapper>
